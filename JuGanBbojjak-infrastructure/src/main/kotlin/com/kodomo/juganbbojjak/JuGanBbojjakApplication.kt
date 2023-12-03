@@ -1,4 +1,4 @@
-package com.kodomo.juganbbojjakinfrastructure
+package com.kodomo.juganbbojjak
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
