@@ -1,4 +1,4 @@
-package com.kodomo.juganbbojjak.domain.event_date.persistence.entity
+package com.kodomo.juganbbojjak.domain.event_schedule.persistence.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -10,7 +10,7 @@ import java.util.UUID
 
 @Table(name = "tbl_weekly_event_date")
 @Entity
-class WeeklyEventDateEntity(
+class WeeklyEventScheduleEntity(
 
     @Id
     val id: UUID = UUID.randomUUID(),

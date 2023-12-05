@@ -1,4 +1,4 @@
-package com.kodomo.juganbbojjak.domain.event_date.persistence.entity
+package com.kodomo.juganbbojjak.domain.event_schedule.persistence.entity
 
 import com.kodomo.juganbbojjak.domain.user.persistence.entity.UserEntity
 import jakarta.persistence.Entity
@@ -12,7 +12,7 @@ import java.util.UUID
 
 @Table(name = "tbl_event_date")
 @Entity
-class EventDateEntity(
+class EventScheduleEntity(
 
     @Id
     val id: UUID = UUID.randomUUID(),
@@ -20,7 +20,7 @@ class EventDateEntity(
     @field:NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "weekly_event_date_id")
-    val weeklyEventDateEntity: WeeklyEventDateEntity,
+    val weeklyEventScheduleEntity: WeeklyEventScheduleEntity,
 
     @field:NotNull
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,4 +1,4 @@
-package com.kodomo.juganbbojjak.domain.event_date.persistence.entity
+package com.kodomo.juganbbojjak.domain.event_schedule.persistence.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -37,5 +37,5 @@ class EventDetailEntity(
     @field:NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_date_id")
-    val eventDateEntity: EventDateEntity
+    val eventScheduleEntity: EventScheduleEntity
 )
