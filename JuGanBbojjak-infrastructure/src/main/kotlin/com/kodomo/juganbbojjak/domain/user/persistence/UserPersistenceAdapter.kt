@@ -14,7 +14,11 @@ class UserPersistenceAdapter(
     private val userMapper: UserMapper,
 ) : UserPort {
 
-    fun queryUserById(id: UUID): User? = userMapper.toDomain(
+    override fun queryUserById(id: UUID): User? = userMapper.toDomain(
         userJpaRepository.findByIdOrNull(id)
+    )
+
+    override fun queryUserByAccountId(accountId: String): User? = userMapper.toDomain(
+        userJpaRepository.findByAccountId(accountId)
     )
 }
