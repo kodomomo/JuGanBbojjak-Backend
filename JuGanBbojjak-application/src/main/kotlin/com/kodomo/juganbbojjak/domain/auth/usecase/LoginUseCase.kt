@@ -17,9 +17,7 @@ class LoginUseCase(
 ) {
 
     fun execute(request: LoginRequest): TokenResponse {
-        println(request.password)
         val user = queryUserPort.queryUserByAccountId(request.accountId) ?: throw UserNotFoundException
-        println(user.password)
 
         if (!securityPort.matchPassword(request.password, user.password)) {
             throw InvalidPasswordException
