@@ -18,7 +18,6 @@ class FilterConfig(
 ) : SecurityConfigurer<DefaultSecurityFilterChain, HttpSecurity> {
 
     override fun init(builder: HttpSecurity?) {
-        TODO("Not yet implemented")
     }
 
     override fun configure(http: HttpSecurity) {
