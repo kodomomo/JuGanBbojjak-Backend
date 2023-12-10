@@ -24,8 +24,8 @@ class GlobalExceptionFilter(
         try {
             filterChain.doFilter(request, response)
         } catch (e: Exception) {
-            when(e) {
-                is JuGanBbojjakException -> writeErrorResponse(response, e.errorProperty)
+            when(e.cause) {
+                is JuGanBbojjakException -> writeErrorResponse(response, (e.cause as JuGanBbojjakException).errorProperty)
                 else -> {
                     e.printStackTrace()
                     writeErrorResponse(response, InternalServerErrorException.errorProperty)
