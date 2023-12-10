@@ -15,3 +15,8 @@ spring:
         batch_size: 200
   jackson:
     property-naming-strategy: SNAKE_CASE
+
+jwt:
+  secret: ${JWT_SECRET}
+  access-exp: ${TOKEN_ACCESS_EXP}
+  refresh-exp: ${TOKEN_REFRESH_EXP}
