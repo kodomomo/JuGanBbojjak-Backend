@@ -14,13 +14,29 @@ dependencyManagement {
 
 dependencies {
     implementation(project(":JuGanBbojjak-application"))
+
+    // Jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    // security
     implementation("org.springframework.boot:spring-boot-starter-security")
+
+    // validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    // Web
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    //Jackson
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    //Jwt
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
     runtimeOnly("com.mysql:mysql-connector-j")
 }
 
