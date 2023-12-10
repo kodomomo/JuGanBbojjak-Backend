@@ -37,6 +37,8 @@ dependencies {
 
     //Jwt
     implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
+
     runtimeOnly("com.mysql:mysql-connector-j")
 }
 
