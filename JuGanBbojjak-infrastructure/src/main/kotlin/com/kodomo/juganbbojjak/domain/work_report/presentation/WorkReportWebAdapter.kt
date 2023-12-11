@@ -19,7 +19,7 @@ class WorkReportWebAdapter(
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("{/weekly-work-report-id}")
+    @PostMapping("/{weekly-work-report-id}")
     fun createWorkReport(
         @PathVariable("weekly-work-report-id") weeklyWorkReportId: UUID,
         @RequestBody @Valid request: CreateWorkReportWebRequest
