@@ -8,7 +8,6 @@ import com.kodomo.juganbbojjak.domain.user.exception.UserNotFoundException
 import com.kodomo.juganbbojjak.domain.user.persistence.repository.UserJpaRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
-import java.util.UUID
 
 @Component
 class EventScheduleMapper(
@@ -20,17 +19,26 @@ class EventScheduleMapper(
         entity?.run {
             EventSchedule(
                 id = id,
+                date = date,
+                name = name,
+                place = place,
+                headcount = headcount,
                 weeklyEventScheduleId = weeklyEventScheduleEntity.id,
                 userId = userEntity.id,
             )
         }
 
     fun toEntity(domain: EventSchedule): EventScheduleEntity {
-        val weeklyEventScheduleEntity = weeklyEventScheduleJpaRepository.findByIdOrNull(domain.weeklyEventScheduleId) ?: throw WeeklyEventScheduleNotFoundException
+        val weeklyEventScheduleEntity = weeklyEventScheduleJpaRepository.findByIdOrNull(domain.weeklyEventScheduleId)
+            ?: throw WeeklyEventScheduleNotFoundException
         val userEntity = userJpaRepository.findByIdOrNull(domain.userId) ?: throw UserNotFoundException
 
         return EventScheduleEntity(
             id = domain.id,
+            date = domain.date,
+            name = domain.name,
+            place = domain.place,
+            headcount = domain.headcount,
             weeklyEventScheduleEntity = weeklyEventScheduleEntity,
             userEntity = userEntity,
         )

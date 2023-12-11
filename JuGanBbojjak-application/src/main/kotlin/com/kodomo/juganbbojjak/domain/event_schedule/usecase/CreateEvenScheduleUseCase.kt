@@ -4,7 +4,6 @@ import com.kodomo.juganbbojjak.common.annotation.UseCase
 import com.kodomo.juganbbojjak.common.spi.SecurityPort
 import com.kodomo.juganbbojjak.domain.event_schedule.dto.request.CreateEvenScheduleRequest
 import com.kodomo.juganbbojjak.domain.event_schedule.exception.WeeklyEventScheduleNotFoundException
-import com.kodomo.juganbbojjak.domain.event_schedule.model.EventDetail
 import com.kodomo.juganbbojjak.domain.event_schedule.model.EventSchedule
 import com.kodomo.juganbbojjak.domain.event_schedule.spi.CommandEventSchedulePort
 import com.kodomo.juganbbojjak.domain.event_schedule.spi.QueryEventSchedulePort
@@ -22,22 +21,16 @@ class CreateEvenScheduleUseCase(
         val weeklyEventSchedule = queryEventSchedulePort.queryWeeklyEventScheduleById(weeklyEventScheduleId)
             ?: throw WeeklyEventScheduleNotFoundException
 
-        val eventSchedule = commandEventSchedulePort.saveEventSchedule(
-            EventSchedule(
-                weeklyEventScheduleId = weeklyEventSchedule.id,
-                userId = userId,
-            )
-        )
-
-        commandEventSchedulePort.saveAllEventDetail(
+        commandEventSchedulePort.saveAllEventSchedule(
             request.eventSchedule.stream()
                 .map {
-                    EventDetail(
+                    EventSchedule(
+                        weeklyEventScheduleId = weeklyEventSchedule.id,
                         date = it.date,
                         name = it.name,
                         place = it.place,
                         headcount = it.headcount,
-                        eventScheduleId = eventSchedule.id
+                        userId = userId,
                     )
                 }.toList()
         )
