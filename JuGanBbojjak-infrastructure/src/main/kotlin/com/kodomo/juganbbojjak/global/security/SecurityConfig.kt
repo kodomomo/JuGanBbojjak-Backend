@@ -32,6 +32,7 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it
                     .requestMatchers(HttpMethod.POST, "/event_schedules/{weekly-event-schedule-id}").hasAuthority(USER.name)
+                    .requestMatchers(HttpMethod.GET, "/event_schedules/{weekly-event-schedule-id}").hasAuthority(ADMIN.name)
                     .anyRequest().permitAll()
             }
             .apply(FilterConfig(jwtTokenParser, objectMapper))
