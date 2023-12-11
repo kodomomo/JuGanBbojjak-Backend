@@ -23,6 +23,8 @@ class GlobalExceptionFilter(
     ) {
         try {
             filterChain.doFilter(request, response)
+        } catch (e: JuGanBbojjakException) {
+            writeErrorResponse(response, e.errorProperty)
         } catch (e: Exception) {
             when(e.cause) {
                 is JuGanBbojjakException -> writeErrorResponse(response, (e.cause as JuGanBbojjakException).errorProperty)
