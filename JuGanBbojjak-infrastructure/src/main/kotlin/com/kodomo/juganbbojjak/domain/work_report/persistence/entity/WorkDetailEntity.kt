@@ -36,5 +36,5 @@ class WorkDetailEntity(
     @field:NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "work_id")
-    val workEntity: WorkEntity,
+    val workReportEntity: WorkReportEntity,
 )
