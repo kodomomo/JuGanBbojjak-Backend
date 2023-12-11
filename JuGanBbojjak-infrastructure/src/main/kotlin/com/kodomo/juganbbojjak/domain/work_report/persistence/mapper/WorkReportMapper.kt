@@ -19,6 +19,7 @@ class WorkReportMapper(
         entity.run {
             WorkReport(
                 id = id,
+                title = title,
                 weeklyWorkReportId = weeklyWorkReportEntity.id,
                 userId = userEntity.id
             )
@@ -33,6 +34,7 @@ class WorkReportMapper(
 
         return WorkReportEntity(
             id = domain.id,
+            title = domain.title,
             weeklyWorkReportEntity = weeklyWorkReportEntity,
             userEntity = userEntity
         )
