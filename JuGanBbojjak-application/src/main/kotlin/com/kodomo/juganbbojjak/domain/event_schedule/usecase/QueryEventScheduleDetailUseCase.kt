@@ -40,6 +40,7 @@ class QueryEventScheduleDetailUseCase(
             eventSchedules = eventSchedules.stream()
                 .map {
                     EventDetailResponse(
+                        eventScheduleId = it.id,
                         date = it.date,
                         name = it.name,
                         place = it.place,
