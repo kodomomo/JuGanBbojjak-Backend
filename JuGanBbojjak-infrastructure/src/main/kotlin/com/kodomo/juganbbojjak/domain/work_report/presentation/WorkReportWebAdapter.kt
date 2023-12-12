@@ -1,9 +1,12 @@
 package com.kodomo.juganbbojjak.domain.work_report.presentation
 
+import com.kodomo.juganbbojjak.domain.work_report.dto.reponse.QueryWorkReportDetailsResponse
 import com.kodomo.juganbbojjak.domain.work_report.presentation.dto.CreateWorkReportWebRequest
 import com.kodomo.juganbbojjak.domain.work_report.usecase.CreateWorkReportUseCase
+import com.kodomo.juganbbojjak.domain.work_report.usecase.QueryWorkReportDetailsUseCase
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -15,7 +18,8 @@ import java.util.UUID
 @RequestMapping("/work_report")
 @RestController
 class WorkReportWebAdapter(
-    private val createWorkReportUseCase: CreateWorkReportUseCase
+    private val createWorkReportUseCase: CreateWorkReportUseCase,
+    private val queryWorkReportDetailsUseCase: QueryWorkReportDetailsUseCase
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -26,4 +30,9 @@ class WorkReportWebAdapter(
     ) {
         createWorkReportUseCase.execute(weeklyWorkReportId, request.toDomainRequest())
     }
+
+    @GetMapping("/{weekly-work-report-id}")
+    fun queryWorkDetails(@PathVariable("weekly-work-report-id") weeklyWorkReportId: UUID): QueryWorkReportDetailsResponse =
+        queryWorkReportDetailsUseCase.execute(weeklyWorkReportId)
+
 }
