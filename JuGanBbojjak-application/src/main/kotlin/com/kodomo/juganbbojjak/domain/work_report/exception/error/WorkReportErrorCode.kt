@@ -6,4 +6,7 @@ enum class WorkReportErrorCode(
     override val status: Int,
     override val message: String,
 ) : ErrorProperty {
+
+    WEEKLY_WORK_REPORT_NOT_FOUND(404, "Weekly Work Report Not Found"),
+    WORK_REPORT_NOT_FOUND(404, "Work Report Not Found")
 }
