@@ -10,6 +10,7 @@ import com.kodomo.juganbbojjak.domain.event_schedule.persistence.repository.Even
 import com.kodomo.juganbbojjak.domain.event_schedule.persistence.repository.WeeklyEventScheduleJpaRepository
 import com.kodomo.juganbbojjak.domain.event_schedule.spi.EventSchedulePort
 import com.kodomo.juganbbojjak.global.annotation.Adapter
+import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.repository.findByIdOrNull
 import java.util.UUID
@@ -28,11 +29,17 @@ class EvenSchedulePersistenceAdapter(
             weeklyEventScheduleJpaRepository.findByIdOrNull(weeklyEventScheduleId)
         )
 
-    override fun queryEventSchedulesByWeeklyEventScheduleId(weeklyEventScheduleId: UUID): List<EventSchedule> {
+    override fun queryEventSchedulesByWeeklyEventScheduleId(
+        weeklyEventScheduleId: UUID,
+        userId: UUID?
+    ): List<EventSchedule> {
         return queryFactory
             .selectFrom(eventScheduleEntity)
             .join(eventScheduleEntity.weeklyEventScheduleEntity, weeklyEventScheduleEntity)
-            .where(weeklyEventScheduleEntity.id.eq(weeklyEventScheduleId))
+            .where(
+                weeklyEventScheduleEntity.id.eq(weeklyEventScheduleId),
+                eqUserId(userId)
+            )
             .orderBy(eventScheduleEntity.date.asc())
             .fetch().stream()
             .map { eventScheduleMapper.toDomain(it)!! }
@@ -42,4 +49,11 @@ class EvenSchedulePersistenceAdapter(
     override fun saveAllEventSchedule(eventSchedule: List<EventSchedule>) {
         eventScheduleJpaRepository.saveAll(eventSchedule.stream().map { eventScheduleMapper.toEntity(it) }.toList())
     }
+
+    //==condition==//
+
+    private fun eqUserId(userId: UUID?): BooleanExpression? =
+        if (userId != null)
+            eventScheduleEntity.userEntity.id.eq(userId)
+        else null
 }

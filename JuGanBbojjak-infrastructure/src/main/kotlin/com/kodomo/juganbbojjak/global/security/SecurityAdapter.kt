@@ -1,7 +1,9 @@
 package com.kodomo.juganbbojjak.global.security
 
 import com.kodomo.juganbbojjak.common.spi.SecurityPort
+import com.kodomo.juganbbojjak.domain.user.model.Authority
 import com.kodomo.juganbbojjak.global.annotation.Adapter
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.UUID

@@ -10,7 +10,7 @@ interface EventSchedulePort : QueryEventSchedulePort, CommandEventSchedulePort {
 
 interface QueryEventSchedulePort {
     fun queryWeeklyEventScheduleById(weeklyEventScheduleId: UUID): WeeklyEventSchedule?
-    fun queryEventSchedulesByWeeklyEventScheduleId(weeklyEventScheduleId: UUID): List<EventSchedule>
+    fun queryEventSchedulesByWeeklyEventScheduleId(weeklyEventScheduleId: UUID, userId: UUID?): List<EventSchedule>
 }
 
 interface CommandEventSchedulePort {
