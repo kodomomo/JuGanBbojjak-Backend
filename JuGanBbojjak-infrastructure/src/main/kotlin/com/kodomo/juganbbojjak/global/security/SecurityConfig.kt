@@ -2,6 +2,7 @@ package com.kodomo.juganbbojjak.global.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kodomo.juganbbojjak.domain.user.model.Authority.USER
+import com.kodomo.juganbbojjak.domain.user.model.Authority.ADMIN
 import com.kodomo.juganbbojjak.global.security.jwt.JwtTokenParser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -29,9 +30,10 @@ class SecurityConfig(
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
             .authorizeHttpRequests {
-                it.anyRequest().permitAll()
-                    .requestMatchers(HttpMethod.POST, "/work_report/{weekly-work-report-id}")
-                    .hasAuthority(USER.name)
+                it
+                    .requestMatchers(HttpMethod.POST, "/event_schedules/{weekly-event-schedule-id}").hasAuthority(USER.name)
+                    .requestMatchers(HttpMethod.POST, "/work_report/{weekly-work-report-id}").hasAuthority(USER.name)
+                    .anyRequest().permitAll()
             }
             .apply(FilterConfig(jwtTokenParser, objectMapper))
 
