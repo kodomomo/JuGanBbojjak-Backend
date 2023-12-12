@@ -1,9 +1,11 @@
 package com.kodomo.juganbbojjak.global.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.kodomo.juganbbojjak.domain.user.model.Authority.USER
 import com.kodomo.juganbbojjak.global.security.jwt.JwtTokenParser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -28,6 +30,8 @@ class SecurityConfig(
             }
             .authorizeHttpRequests {
                 it.anyRequest().permitAll()
+                    .requestMatchers(HttpMethod.POST, "/work_report/{weekly-work-report-id}")
+                    .hasAuthority(USER.name)
             }
             .apply(FilterConfig(jwtTokenParser, objectMapper))
 
