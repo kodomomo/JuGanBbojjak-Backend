@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     id("org.springframework.boot") version "3.2.0"
     id("io.spring.dependency-management") version "1.1.4"
@@ -66,4 +68,12 @@ allprojects {
         }
     }
 
+}
+
+tasks.getByName<Jar>("jar") {
+    enabled = false
+}
+
+tasks.getByName<BootJar>("bootJar") {
+    enabled = false
 }
