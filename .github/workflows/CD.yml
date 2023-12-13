@@ -1,0 +1,48 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'zulu'
+    
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew --build-cache build
+
+    
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB }}:latest
+
+    - name: Push the Docker image
+      run: docker push ${{ secrets.DOCKER_HUB }}:latest
+
+    
+    - name: Connect EC2 & Deploy Docker Image
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        port: ${{ secrets.EC2_PORT }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_KEY }}
+        script: |
+         cd kodomo
+         docker pull ${{ secrets.DOCKER_HUB }}:latest
+         docker rm -f jugan-server
+         docker image prune -a -f
+         docker run --name jugan-server -dp 8080:8080 --env-file .env ${{ secrets.DOCKER_HUB }}:latest
+  
