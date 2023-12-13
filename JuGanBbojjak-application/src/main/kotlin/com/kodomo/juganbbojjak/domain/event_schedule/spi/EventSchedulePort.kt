@@ -13,8 +13,10 @@ interface QueryEventSchedulePort {
     fun queryEventSchedulesByWeeklyEventScheduleId(weeklyEventScheduleId: UUID, userId: UUID?): List<EventSchedule>
     fun queryAllEventScheduleList(): List<WeeklyEventSchedule>
     fun queryLatestEventSchedule(): WeeklyEventSchedule?
+    fun queryEventScheduleById(eventScheduleId: UUID): EventSchedule?
 }
 
 interface CommandEventSchedulePort {
     fun saveAllEventSchedule(eventSchedule: List<EventSchedule>)
+    fun saveEventSchedule(eventSchedule: EventSchedule)
 }

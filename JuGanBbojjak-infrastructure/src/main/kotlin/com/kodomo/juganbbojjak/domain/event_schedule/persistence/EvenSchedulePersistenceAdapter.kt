@@ -32,8 +32,8 @@ class EvenSchedulePersistenceAdapter(
     override fun queryEventSchedulesByWeeklyEventScheduleId(
         weeklyEventScheduleId: UUID,
         userId: UUID?
-    ): List<EventSchedule> {
-        return queryFactory
+    ): List<EventSchedule> =
+        queryFactory
             .selectFrom(eventScheduleEntity)
             .join(eventScheduleEntity.weeklyEventScheduleEntity, weeklyEventScheduleEntity)
             .where(
@@ -41,13 +41,19 @@ class EvenSchedulePersistenceAdapter(
                 eqUserId(userId)
             )
             .orderBy(eventScheduleEntity.date.asc())
-            .fetch().stream()
+            .fetch()
             .map { eventScheduleMapper.toDomain(it)!! }
-            .toList()
-    }
+
+    override fun queryEventScheduleById(eventScheduleId: UUID): EventSchedule? = eventScheduleMapper.toDomain(
+        eventScheduleJpaRepository.findByIdOrNull(eventScheduleId)
+    )
 
     override fun saveAllEventSchedule(eventSchedule: List<EventSchedule>) {
         eventScheduleJpaRepository.saveAll(eventSchedule.stream().map { eventScheduleMapper.toEntity(it) }.toList())
+    }
+
+    override fun saveEventSchedule(eventSchedule: EventSchedule) {
+        eventScheduleJpaRepository.save(eventScheduleMapper.toEntity(eventSchedule))
     }
 
     //==condition==//

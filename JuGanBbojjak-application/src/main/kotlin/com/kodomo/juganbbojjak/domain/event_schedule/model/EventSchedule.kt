@@ -13,4 +13,17 @@ data class EventSchedule(
     val headcount: Int,
     val weeklyEventScheduleId: UUID,
     val userId: UUID,
-)
+) {
+
+    fun update(
+        date: LocalDate,
+        name: String,
+        place: String,
+        headcount: Int,
+    ) = this.copy(
+        date = date,
+        name = name,
+        place = place,
+        headcount = headcount,
+    )
+}
