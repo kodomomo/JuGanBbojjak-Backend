@@ -10,5 +10,5 @@ interface CommandWorkReportPort {
 }
 
 interface QueryWorkReportPort {
-    fun queryWorkReportByWeeklyWorkReportId(weeklyWorkReportId: UUID, userId: UUID?): WorkReport?
+
 }

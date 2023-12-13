@@ -1,5 +1,6 @@
 package com.kodomo.juganbbojjak.global.querydsl
 
+import com.querydsl.jpa.JPQLTemplates
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager
 import org.springframework.context.annotation.Bean
@@ -11,5 +12,5 @@ class QuerydslConfig(
 ) {
 
     @Bean
-    fun queryFactory() = JPAQueryFactory(entityManager)
+    fun queryFactory() = JPAQueryFactory(JPQLTemplates.DEFAULT, entityManager)
 }

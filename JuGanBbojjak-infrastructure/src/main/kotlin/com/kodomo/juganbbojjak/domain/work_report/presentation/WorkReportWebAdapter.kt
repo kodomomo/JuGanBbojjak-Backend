@@ -1,6 +1,6 @@
 package com.kodomo.juganbbojjak.domain.work_report.presentation
 
-import com.kodomo.juganbbojjak.domain.work_report.dto.reponse.QueryWorkReportDetailsResponse
+import com.kodomo.juganbbojjak.domain.work_report.dto.response.QueryWorkReportDetailsResponse
 import com.kodomo.juganbbojjak.domain.work_report.presentation.dto.CreateWorkReportWebRequest
 import com.kodomo.juganbbojjak.domain.work_report.usecase.CreateWorkReportUseCase
 import com.kodomo.juganbbojjak.domain.work_report.usecase.QueryWorkReportDetailsUseCase
