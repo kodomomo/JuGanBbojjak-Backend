@@ -37,6 +37,9 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.POST, "/work_report/{weekly-work-report-id}").hasAuthority(USER.name)
                     .requestMatchers(HttpMethod.GET, "/work_report/{weekly-work-report-id}").hasAnyAuthority(USER.name, ADMIN.name)
 
+                    .requestMatchers(HttpMethod.GET, "/main").hasAnyAuthority(USER.name, ADMIN.name)
+                    .requestMatchers(HttpMethod.GET, "/main/latest_work").hasAuthority(USER.name)
+
                     .anyRequest().permitAll()
             }
             .apply(FilterConfig(jwtTokenParser, objectMapper))

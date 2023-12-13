@@ -8,14 +8,13 @@ import com.kodomo.juganbbojjak.domain.user.spi.QueryUserPort
 import com.kodomo.juganbbojjak.domain.work_report.dto.reponse.QueryWorkReportDetailsResponse
 import com.kodomo.juganbbojjak.domain.work_report.dto.reponse.WorkReportListResponse
 import com.kodomo.juganbbojjak.domain.work_report.exception.WorkReportNotFoundException
-import com.kodomo.juganbbojjak.domain.work_report.spi.WorkDetailPort
-import com.kodomo.juganbbojjak.domain.work_report.spi.WorkReportPort
+import com.kodomo.juganbbojjak.domain.work_report.spi.*
 import java.util.UUID
 
 @UseCase
 class QueryWorkReportDetailsUseCase(
-    private val workReportPort: WorkReportPort,
-    private val workDetailPort: WorkDetailPort,
+    private val queryWorkReportPort: QueryWorkReportPort,
+    private val queryWorkDetailPort: QueryWorkDetailPort,
     private val securityPort: SecurityPort,
     private val queryUserPort: QueryUserPort
 ) {
@@ -26,11 +25,11 @@ class QueryWorkReportDetailsUseCase(
             ?: throw UserNotFoundException
 
         val workReport = when (user.authority) {
-            Authority.ADMIN -> workReportPort.queryWorkReportByWeeklyWorkReportId(weeklyWorkReportId, null)
-            Authority.USER -> workReportPort.queryWorkReportByWeeklyWorkReportId(weeklyWorkReportId, user.id)
+            Authority.ADMIN -> queryWorkReportPort.queryWorkReportByWeeklyWorkReportId(weeklyWorkReportId, null)
+            Authority.USER -> queryWorkReportPort.queryWorkReportByWeeklyWorkReportId(weeklyWorkReportId, user.id)
         } ?: throw WorkReportNotFoundException
 
-        val workDetail = workDetailPort.queryWorkDetailByWorkReportId(workReport.id)
+        val workDetail = queryWorkDetailPort.queryWorkDetailByWorkReportId(workReport.id)
 
         return QueryWorkReportDetailsResponse(
             title = workReport.title,

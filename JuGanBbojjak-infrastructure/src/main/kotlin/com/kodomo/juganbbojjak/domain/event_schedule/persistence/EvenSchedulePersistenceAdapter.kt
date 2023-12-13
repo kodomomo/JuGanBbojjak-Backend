@@ -56,4 +56,18 @@ class EvenSchedulePersistenceAdapter(
         if (userId != null)
             eventScheduleEntity.userEntity.id.eq(userId)
         else null
+    override fun queryAllEventScheduleList(): List<WeeklyEventSchedule> {
+        val weeklyEventScheduleEntity = weeklyEventScheduleJpaRepository.findAllByOrderByEndDateDesc()
+
+        return weeklyEventScheduleEntity.map {
+            WeeklyEventSchedule(
+                id = it.id,
+                startDate = it.startDate,
+                endDate = it.endDate
+            )
+        }
+    }
+
+    override fun queryLatestEventSchedule(): WeeklyEventSchedule? =
+        weeklyEventScheduleMapper.toDomain(weeklyEventScheduleJpaRepository.findTopByOrderByEndDateDesc())
 }

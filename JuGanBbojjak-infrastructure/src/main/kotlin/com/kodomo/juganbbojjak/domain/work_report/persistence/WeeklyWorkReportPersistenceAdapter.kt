@@ -21,4 +21,21 @@ class WeeklyWorkReportPersistenceAdapter(
                 ?: throw WeeklyWorkReportNotFoundException
         )
 
+    override fun queryAllWeeklyWorkReportList(): List<WeeklyWorkReport> {
+        val weeklyWorkReportEntity = weeklyWorkReportRepository.findAllByOrderByEndDateDesc()
+
+        return weeklyWorkReportEntity.map {
+            WeeklyWorkReport(
+                id = it.id,
+                startDate = it.startDate,
+                endDate = it.endDate
+            )
+        }
+    }
+
+    override fun queryLatestWeeklyWorkReport(): WeeklyWorkReport =
+        weeklyWorkReportMapper.toDomain(
+            weeklyWorkReportRepository.findTopByOrderByEndDateDesc()
+                ?: throw WeeklyWorkReportNotFoundException
+        )
 }
