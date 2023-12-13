@@ -1,6 +1,5 @@
 package com.kodomo.juganbbojjak.domain.event_schedule.persistence
 
-import com.kodomo.juganbbojjak.domain.event_schedule.exception.WeeklyEventScheduleNotFoundException
 import com.kodomo.juganbbojjak.domain.event_schedule.model.EventSchedule
 import com.kodomo.juganbbojjak.domain.event_schedule.model.WeeklyEventSchedule
 import com.kodomo.juganbbojjak.domain.event_schedule.persistence.entity.QEventScheduleEntity.eventScheduleEntity
