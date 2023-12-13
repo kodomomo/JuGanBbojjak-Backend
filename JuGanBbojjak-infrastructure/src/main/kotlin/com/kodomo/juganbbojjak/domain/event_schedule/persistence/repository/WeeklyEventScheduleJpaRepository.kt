@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
 interface WeeklyEventScheduleJpaRepository : JpaRepository<WeeklyEventScheduleEntity, UUID> {
+    fun findAllByOrderByEndDateDesc(): List<WeeklyEventScheduleEntity>
+    fun findTopByOrderByEndDateDesc(): WeeklyEventScheduleEntity?
 }

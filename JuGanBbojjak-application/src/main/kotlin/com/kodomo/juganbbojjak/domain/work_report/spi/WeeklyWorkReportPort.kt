@@ -11,4 +11,6 @@ interface CommandWeeklyWorkReportPort {
 
 interface QueryWeeklyWorkReportPort {
     fun queryWeeklyWorkReportById(weeklyWorkReportId: UUID): WeeklyWorkReport
+    fun queryAllWeeklyWorkReportList(): List<WeeklyWorkReport>
+    fun queryLatestWeeklyWorkReport(): WeeklyWorkReport
 }
