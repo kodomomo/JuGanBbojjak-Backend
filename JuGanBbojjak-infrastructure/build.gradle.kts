@@ -46,6 +46,9 @@ dependencies {
     kapt("jakarta.persistence:jakarta.persistence-api")
 
     runtimeOnly("com.mysql:mysql-connector-j")
+
+    // swagger
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 }
 
 allOpen {
