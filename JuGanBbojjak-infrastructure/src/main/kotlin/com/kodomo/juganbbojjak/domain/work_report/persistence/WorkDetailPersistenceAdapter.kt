@@ -35,7 +35,7 @@ class WorkDetailPersistenceAdapter(
     ): List<WorkReportDetailsVO> =
         queryFactory
             .selectFrom(workReportEntity)
-            .join(workDetailEntity)
+            .leftJoin(workDetailEntity)
             .on(workDetailEntity.workReportEntity.id.eq(workReportEntity.id))
             .where(
                 workReportEntity.weeklyWorkReportEntity.id.eq(weeklyWorkReportId),
