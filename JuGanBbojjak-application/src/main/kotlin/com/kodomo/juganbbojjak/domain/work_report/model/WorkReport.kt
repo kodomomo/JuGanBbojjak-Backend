@@ -4,7 +4,7 @@ import com.kodomo.juganbbojjak.common.annotation.Aggregate
 import java.util.UUID
 
 @Aggregate
-class WorkReport (
+data class WorkReport(
 
     val id: UUID = UUID.randomUUID(),
 
@@ -13,4 +13,9 @@ class WorkReport (
     val weeklyWorkReportId: UUID,
 
     val userId: UUID
-)
+) {
+
+    fun updateWorkReport(title: String) = this.copy(
+        title = title
+    )
+}

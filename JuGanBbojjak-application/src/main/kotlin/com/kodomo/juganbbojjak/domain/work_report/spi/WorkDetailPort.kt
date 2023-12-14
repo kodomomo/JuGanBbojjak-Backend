@@ -8,8 +8,10 @@ interface WorkDetailPort : CommandWorkDetailPort, QueryWorkDetailPort
 
 interface CommandWorkDetailPort{
     fun saveAllWorkDetails(workDetails: List<WorkDetail>)
+    fun saveWorkDetail(workDetail: WorkDetail)
 }
 
 interface QueryWorkDetailPort{
     fun queryWorkDetailByWeeklyWorkReportId(weeklyWorkReportId: UUID, userId: UUID?): List<WorkReportDetailsVO>
+    fun queryWorkDetailById(workDetailIdList: UUID): WorkDetail
 }

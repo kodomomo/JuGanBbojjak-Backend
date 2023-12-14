@@ -1,5 +1,6 @@
 package com.kodomo.juganbbojjak.domain.work_report.persistence
 
+import com.kodomo.juganbbojjak.domain.work_report.exception.WorkDetailNotFoundException
 import com.kodomo.juganbbojjak.domain.work_report.model.WorkDetail
 import com.kodomo.juganbbojjak.domain.work_report.persistence.entity.QWorkDetailEntity.workDetailEntity
 import com.kodomo.juganbbojjak.domain.work_report.persistence.entity.QWorkReportEntity.workReportEntity
@@ -9,11 +10,11 @@ import com.kodomo.juganbbojjak.domain.work_report.persistence.vo.QQueryWorkRepor
 import com.kodomo.juganbbojjak.domain.work_report.spi.WorkDetailPort
 import com.kodomo.juganbbojjak.domain.work_report.spi.vo.WorkReportDetailsVO
 import com.kodomo.juganbbojjak.global.annotation.Adapter
-import com.querydsl.core.group.GroupBy
 import com.querydsl.core.group.GroupBy.groupBy
 import com.querydsl.core.group.GroupBy.list
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
+import org.springframework.data.repository.findByIdOrNull
 import java.util.*
 
 @Adapter
@@ -57,5 +58,17 @@ class WorkDetailPersistenceAdapter(
             workReportEntity.userEntity.id.eq(userId)
         else null
 
+    override fun queryWorkDetailById(workDetailIdList: UUID): WorkDetail {
+        return workDetailMapper.toDomain(
+            workDetailRepository.findByIdOrNull(workDetailIdList)
+                ?: throw WorkDetailNotFoundException
+        )
 
+    }
+
+    override fun saveWorkDetail(workDetail: WorkDetail) {
+        workDetailRepository.save(
+            workDetailMapper.toEntity(workDetail)
+        )
+    }
 }
