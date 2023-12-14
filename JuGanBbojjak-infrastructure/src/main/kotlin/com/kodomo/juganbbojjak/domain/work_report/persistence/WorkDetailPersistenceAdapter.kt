@@ -5,8 +5,14 @@ import com.kodomo.juganbbojjak.domain.work_report.persistence.entity.QWorkDetail
 import com.kodomo.juganbbojjak.domain.work_report.persistence.entity.QWorkReportEntity.workReportEntity
 import com.kodomo.juganbbojjak.domain.work_report.persistence.mapper.WorkDetailMapper
 import com.kodomo.juganbbojjak.domain.work_report.persistence.repository.WorkDetailRepository
+import com.kodomo.juganbbojjak.domain.work_report.persistence.vo.QQueryWorkReportDetailsVO
 import com.kodomo.juganbbojjak.domain.work_report.spi.WorkDetailPort
+import com.kodomo.juganbbojjak.domain.work_report.spi.vo.WorkReportDetailsVO
 import com.kodomo.juganbbojjak.global.annotation.Adapter
+import com.querydsl.core.group.GroupBy
+import com.querydsl.core.group.GroupBy.groupBy
+import com.querydsl.core.group.GroupBy.list
+import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import java.util.*
 
@@ -23,13 +29,33 @@ class WorkDetailPersistenceAdapter(
         )
     }
 
-    override fun queryWorkDetailByWorkReportId(workReportId: UUID): List<WorkDetail> {
-        return queryFactory
-            .selectFrom(workDetailEntity)
-            .join(workReportEntity)
+    override fun queryWorkDetailByWeeklyWorkReportId(
+        weeklyWorkReportId: UUID,
+        userId: UUID?
+    ): List<WorkReportDetailsVO> =
+        queryFactory
+            .selectFrom(workReportEntity)
+            .leftJoin(workDetailEntity)
             .on(workDetailEntity.workReportEntity.id.eq(workReportEntity.id))
-            .where(workDetailEntity.workReportEntity.id.eq(workReportId))
-            .fetch()
-            .map { workDetailMapper.toDomain(it) }
-    }
+            .where(
+                workReportEntity.weeklyWorkReportEntity.id.eq(weeklyWorkReportId),
+                eqUserId(userId)
+            )
+            .transform(
+                groupBy(workReportEntity.id)
+                    .list(
+                        QQueryWorkReportDetailsVO(
+                            workReportEntity.id,
+                            workReportEntity.title,
+                            list(workDetailEntity)
+                        )
+                    )
+            )
+
+    private fun eqUserId(userId: UUID?): BooleanExpression? =
+        if (userId != null)
+            workReportEntity.userEntity.id.eq(userId)
+        else null
+
+
 }

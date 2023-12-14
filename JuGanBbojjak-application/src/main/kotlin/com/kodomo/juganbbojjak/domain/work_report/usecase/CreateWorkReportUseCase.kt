@@ -20,23 +20,24 @@ class CreateWorkReportUseCase(
         val user = securityPort.getCurrentUserId()
         val weeklyWorkReport = weeklyWorkReportPort.queryWeeklyWorkReportById(weeklyWorkReportId)
 
-        val workReport = commandWorkReportPort.saveWorkReport(
-            WorkReport(
-                title = request.title,
-                weeklyWorkReportId = weeklyWorkReport.id,
-                userId = user
+        request.workReportList.forEach { workReportList ->
+            val workReport = commandWorkReportPort.saveWorkReport(
+                WorkReport(
+                    title = workReportList.title,
+                    weeklyWorkReportId = weeklyWorkReport.id,
+                    userId = user
+                )
             )
-        )
 
-        commandWorkDetailPort.saveAllWorkDetails(
-            request.workReportList.map {
+            val workDetails = workReportList.workReportDetails.map { detail ->
                 WorkDetail(
-                    title = it.contentKey,
-                    content = it.contentValue,
-                    type = it.contentType,
+                    title = detail.contentKey,
+                    content = detail.contentValue,
+                    type = detail.contentType,
                     workReportId = workReport.id
                 )
             }
-        )
+            commandWorkDetailPort.saveAllWorkDetails(workDetails)
+        }
     }
 }
