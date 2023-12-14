@@ -10,5 +10,5 @@ interface CommandWorkReportPort {
 }
 
 interface QueryWorkReportPort {
-
+    fun queryWorkReportById(workReportId: UUID): WorkReport
 }
