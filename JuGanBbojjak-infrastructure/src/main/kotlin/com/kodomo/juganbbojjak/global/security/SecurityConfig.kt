@@ -33,6 +33,7 @@ class SecurityConfig(
                 it
                     .requestMatchers(HttpMethod.POST, "/event_schedules/{weekly-event-schedule-id}").hasAuthority(USER.name)
                     .requestMatchers(HttpMethod.GET, "/event_schedules/{weekly-event-schedule-id}").hasAnyAuthority(ADMIN.name, USER.name)
+                    .requestMatchers(HttpMethod.PUT, "/event_schedules/{event-schedule-id}").hasAnyAuthority(ADMIN.name, USER.name)
 
                     .requestMatchers(HttpMethod.POST, "/work_report/{weekly-work-report-id}").hasAuthority(USER.name)
                     .requestMatchers(HttpMethod.GET, "/work_report/{weekly-work-report-id}").hasAnyAuthority(USER.name, ADMIN.name)
