@@ -19,4 +19,5 @@ interface QueryEventSchedulePort {
 interface CommandEventSchedulePort {
     fun saveAllEventSchedule(eventSchedule: List<EventSchedule>)
     fun saveEventSchedule(eventSchedule: EventSchedule)
+    fun saveWeeklyEventSchedule(weeklyEventSchedule: WeeklyEventSchedule): WeeklyEventSchedule
 }

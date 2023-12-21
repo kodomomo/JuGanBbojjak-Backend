@@ -2,8 +2,10 @@ package com.kodomo.juganbbojjak.domain.event_schedule.presentation
 
 import com.kodomo.juganbbojjak.domain.event_schedule.dto.response.QueryEventScheduleDetailResponse
 import com.kodomo.juganbbojjak.domain.event_schedule.presentation.dto.CreateEvenScheduleWebRequest
+import com.kodomo.juganbbojjak.domain.event_schedule.presentation.dto.CreateWeeklyEventScheduleWebRequest
 import com.kodomo.juganbbojjak.domain.event_schedule.presentation.dto.UpdateEventScheduleWebRequest
 import com.kodomo.juganbbojjak.domain.event_schedule.usecase.CreateEvenScheduleUseCase
+import com.kodomo.juganbbojjak.domain.event_schedule.usecase.CreateWeeklyEventScheduleUseCase
 import com.kodomo.juganbbojjak.domain.event_schedule.usecase.QueryEventScheduleDetailUseCase
 import com.kodomo.juganbbojjak.domain.event_schedule.usecase.UpdateEventScheduleUseCase
 import jakarta.validation.Valid
@@ -24,6 +26,7 @@ class EventScheduleWebAdapter(
     private val createEvenScheduleUseCase: CreateEvenScheduleUseCase,
     private val queryEventScheduleDetailUseCase: QueryEventScheduleDetailUseCase,
     private val updateEventScheduleUseCase: UpdateEventScheduleUseCase,
+    private val createWeeklyEventScheduleUseCase: CreateWeeklyEventScheduleUseCase,
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -47,5 +50,13 @@ class EventScheduleWebAdapter(
         @RequestBody @Valid request: UpdateEventScheduleWebRequest,
     ) {
         updateEventScheduleUseCase.execute(eventScheduleId, request.toDomainRequest())
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    fun createWeeklyEventSchedule(
+        @RequestBody @Valid request: CreateWeeklyEventScheduleWebRequest,
+    ) {
+        createWeeklyEventScheduleUseCase.execute(request.toDomainRequest())
     }
 }
