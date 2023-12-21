@@ -15,6 +15,10 @@ class WeeklyWorkReportPersistenceAdapter(
     private val weeklyWorkReportMapper: WeeklyWorkReportMapper
 ) : WeeklyWorkReportPort {
 
+    override fun saveWeeklyWorkReport(weeklyWorkReport: WeeklyWorkReport) {
+        weeklyWorkReportRepository.save(weeklyWorkReportMapper.toEntity(weeklyWorkReport))
+    }
+
     override fun queryWeeklyWorkReportById(weeklyWorkReportId: UUID): WeeklyWorkReport =
         weeklyWorkReportMapper.toDomain(
             weeklyWorkReportRepository.findByIdOrNull(weeklyWorkReportId)
