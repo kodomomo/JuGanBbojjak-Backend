@@ -56,12 +56,17 @@ class EvenSchedulePersistenceAdapter(
         eventScheduleJpaRepository.save(eventScheduleMapper.toEntity(eventSchedule))
     }
 
+    override fun saveWeeklyEventSchedule(weeklyEventSchedule: WeeklyEventSchedule): WeeklyEventSchedule = weeklyEventScheduleMapper.toDomain(
+            weeklyEventScheduleJpaRepository.save(weeklyEventScheduleMapper.toEntity(weeklyEventSchedule))
+    )!!
+
     //==condition==//
 
     private fun eqUserId(userId: UUID?): BooleanExpression? =
         if (userId != null)
             eventScheduleEntity.userEntity.id.eq(userId)
         else null
+
     override fun queryAllEventScheduleList(): List<WeeklyEventSchedule> {
         val weeklyEventScheduleEntity = weeklyEventScheduleJpaRepository.findAllByOrderByEndDateDesc()
 

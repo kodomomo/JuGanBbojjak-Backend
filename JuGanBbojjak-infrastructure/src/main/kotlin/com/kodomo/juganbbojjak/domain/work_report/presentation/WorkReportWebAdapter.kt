@@ -1,8 +1,10 @@
 package com.kodomo.juganbbojjak.domain.work_report.presentation
 
 import com.kodomo.juganbbojjak.domain.work_report.dto.response.QueryWorkReportDetailsResponse
+import com.kodomo.juganbbojjak.domain.work_report.presentation.dto.CreateWeeklyWorkReportWebRequest
 import com.kodomo.juganbbojjak.domain.work_report.presentation.dto.CreateWorkReportWebRequest
 import com.kodomo.juganbbojjak.domain.work_report.presentation.dto.UpdateWorkReportWebRequest
+import com.kodomo.juganbbojjak.domain.work_report.usecase.CreateWeeklyWorkReportUseCase
 import com.kodomo.juganbbojjak.domain.work_report.usecase.CreateWorkReportUseCase
 import com.kodomo.juganbbojjak.domain.work_report.usecase.QueryWorkReportDetailsUseCase
 import com.kodomo.juganbbojjak.domain.work_report.usecase.UpdateWorkReportUseCase
@@ -23,7 +25,8 @@ import java.util.UUID
 class WorkReportWebAdapter(
     private val createWorkReportUseCase: CreateWorkReportUseCase,
     private val queryWorkReportDetailsUseCase: QueryWorkReportDetailsUseCase,
-    private val updateWorkReportUseCase: UpdateWorkReportUseCase
+    private val updateWorkReportUseCase: UpdateWorkReportUseCase,
+    private val createWeeklyWorkReportUseCase: CreateWeeklyWorkReportUseCase,
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -45,4 +48,11 @@ class WorkReportWebAdapter(
         updateWorkReportUseCase.execute(request.toDomainRequest())
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    fun createWeeklyWorkReport(
+        @RequestBody @Valid request: CreateWeeklyWorkReportWebRequest
+    ) {
+        createWeeklyWorkReportUseCase.execute(request.toDomainRequest())
+    }
 }

@@ -6,7 +6,7 @@ import java.util.UUID
 interface WeeklyWorkReportPort : CommandWeeklyWorkReportPort, QueryWeeklyWorkReportPort
 
 interface CommandWeeklyWorkReportPort {
-
+    fun saveWeeklyWorkReport(weeklyWorkReport: WeeklyWorkReport)
 }
 
 interface QueryWeeklyWorkReportPort {

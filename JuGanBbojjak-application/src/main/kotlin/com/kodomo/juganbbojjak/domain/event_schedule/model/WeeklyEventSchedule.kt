@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Aggregate
 data class WeeklyEventSchedule(
-   val id: UUID,
+   val id: UUID = UUID.randomUUID(),
     val startDate: LocalDate,
     val endDate: LocalDate,
 )
