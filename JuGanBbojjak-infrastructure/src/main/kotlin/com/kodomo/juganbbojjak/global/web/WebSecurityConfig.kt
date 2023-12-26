@@ -13,5 +13,7 @@ class WebSecurityConfig : WebMvcConfigurer {
             .allowedOrigins("*")
             .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD")
             .allowedHeaders("*")
+            .allowCredentials(true)
+            .maxAge(3600)
     }
 }
